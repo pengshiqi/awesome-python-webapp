@@ -3,9 +3,9 @@
 A simple, lightweight, WSGI-compatible web framework
 """
 
-import types, os, re, cgi, sys, time, datetime, functools, mimetypes, threading, logging, urllib, traceback
-
 __author__ = 'patrick_psq'
+
+import types, os, re, cgi, sys, time, datetime, functools, mimetypes, threading, logging, urllib, traceback
 
 try:
     from cStringIO import StringIO
