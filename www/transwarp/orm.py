@@ -241,7 +241,7 @@ class Model(dict):
     def find_all(cls, *args):
         # Find all and return list
         L = db.select('select * from `%s`' % cls.__table__)
-        return [(cls(**d) for d in L)]
+        return [cls(**d) for d in L]
 
     @classmethod
     def find_by(cls, where, *args):

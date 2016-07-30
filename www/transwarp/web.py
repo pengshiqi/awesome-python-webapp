@@ -2,9 +2,10 @@
 """
 A simple, lightweight, WSGI-compatible web framework
 """
-__author__ = 'patrick_psq'
 
 import types, os, re, cgi, sys, time, datetime, functools, mimetypes, threading, logging, urllib, traceback
+
+__author__ = 'patrick_psq'
 
 try:
     from cStringIO import StringIO
@@ -16,6 +17,7 @@ except:
 ctx = threading.local()
 
 # Dict object:
+
 
 class Dict(dict):
     """
@@ -66,6 +68,7 @@ _TIMEDELTA_ZERO = datetime.timedelta(0)
 # timezone as UTC +8:00, UTC -10:00
 
 _RE_TZ = re.compile('^([\+\-])([0-9]{1,2})\:([0-9]{1,2})$')
+
 
 class UTC(datetime.tzinfo):
     '''
@@ -235,6 +238,7 @@ _RESPONSE_HEADER_DICT = dict(zip(map(lambda x: x.upper(), _RESPONSE_HEADERS), _R
 
 _HEADER_X_POWERED_BY = ('X-Powered-By', 'transwarp/1.0')
 
+
 class HttpError(Exception):
     """
     HttpError that defines http error code.
@@ -297,6 +301,7 @@ def badrequest():
     '''
     return HttpError(400)
 
+
 def unauthorized():
     '''
     Send an unauthorized response.
@@ -307,6 +312,7 @@ def unauthorized():
     HttpError: 401 Unauthorized
     '''
     return HttpError(401)
+
 
 def forbidden():
     '''
@@ -319,6 +325,7 @@ def forbidden():
     '''
     return HttpError(403)
 
+
 def notfound():
     '''
     Send a not found response.
@@ -329,6 +336,7 @@ def notfound():
     HttpError: 404 Not Found
     '''
     return HttpError(404)
+
 
 def conflict():
     '''
@@ -341,6 +349,7 @@ def conflict():
     '''
     return HttpError(409)
 
+
 def internalerror():
     '''
     Send an internal error response.
@@ -351,6 +360,7 @@ def internalerror():
     HttpError: 500 Internal Server Error
     '''
     return HttpError(500)
+
 
 def redirect(location):
     '''
@@ -363,6 +373,7 @@ def redirect(location):
     '''
     return RedirectError(301, location)
 
+
 def found(location):
     '''
     Do temporary redirect.
@@ -373,6 +384,7 @@ def found(location):
     RedirectError: 302 Found, http://www.itranswarp.com/
     '''
     return RedirectError(302, location)
+
 
 def seeother(location):
     '''
@@ -387,6 +399,7 @@ def seeother(location):
     'http://www.itranswarp.com/seeother?r=123'
     '''
     return RedirectError(303, location)
+
 
 def _to_str(s):
     """
@@ -406,6 +419,7 @@ def _to_str(s):
         return s.encode('utf-8')
     return str(s)
 
+
 def _to_unicode(s, encoding='utf-8'):
     """
     Convert to unicode.
@@ -414,6 +428,7 @@ def _to_unicode(s, encoding='utf-8'):
     True
     """
     return s.decode('utf-8')
+
 
 def _quote(s, encoding='utf-8'):
     '''
@@ -428,6 +443,7 @@ def _quote(s, encoding='utf-8'):
         s = s.encode(encoding)
     return urllib.quote(s)
 
+
 def _unquote(s, encoding='utf-8'):
     '''
     Url unquote as unicode.
@@ -436,6 +452,7 @@ def _unquote(s, encoding='utf-8'):
     u'http://example/test?a=1+'
     '''
     return urllib.unquote(s).decode(encoding)
+
 
 def get(path):
     """
@@ -463,6 +480,7 @@ def get(path):
         return func
     return _decorator
 
+
 def post(path):
     '''
     A @post decorator.
@@ -484,7 +502,9 @@ def post(path):
         return func
     return _decorator
 
+
 _re_route = re.compile(r'(\:[a-zA-Z_]\w*)')
+
 
 def _build_regex(path):
     r'''
@@ -564,7 +584,7 @@ class StaticFileRoute(object):
         self.is_static = False
         self.route = re.compile('^/static/(.+)$')
 
-    def match(self, *args):
+    def match(self, url):
         if url.startswith('/static/'):
             return (url[1:], )
         return None
@@ -576,6 +596,7 @@ class StaticFileRoute(object):
         fext = os.path.splitext(fpath)[1]
         ctx.response.content_type = mimetypes.types_map.get(fext.lower(), 'application/octet-stream')
         return _static_file_generator(fpath)
+
 
 def favicon_handler():
     return static_file_handler('/favicon.ico')
@@ -1205,9 +1226,10 @@ class TemplateEngine(object):
     def __call__(self, path, model):
         return '<!-- override this method to render template -->'
 
+
 class Jinja2TemplateEngine(TemplateEngine):
 
-    '''
+    """
     Render using jinja2 template engine.
 
     >>> templ_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'test')
@@ -1215,12 +1237,12 @@ class Jinja2TemplateEngine(TemplateEngine):
     >>> engine.add_filter('datetime', lambda dt: dt.strftime('%Y-%m-%d %H:%M:%S'))
     >>> engine('jinja2-test.html', dict(name='Michael', posted_at=datetime.datetime(2014, 6, 1, 10, 11, 12)))
     '<p>Hello, Michael.</p><span>2014-06-01 10:11:12</span>'
-    '''
+    """
 
     def __init__(self, templ_dir, **kw):
         from jinja2 import Environment, FileSystemLoader
         if not 'autoescape' in kw:
-            kw['autoescape'] =  True
+            kw['autoescape'] = True
         self._env = Environment(loader=FileSystemLoader(templ_dir), **kw)
 
     def add_filter(self, name, fn_filter):
@@ -1362,7 +1384,7 @@ def _build_interceptor_chain(last_fn, *interceptors):
     for f in L:
         fn = _build_interceptor_fn(f, fn)
     return fn
-    
+
 
 def _load_module(module_name):
     '''
