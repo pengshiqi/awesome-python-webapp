@@ -34,6 +34,10 @@ MVC module.
 
 Front-end module.
 
+### Day 09
+
+API module.
+
 ## 运行方式
 
 进入/www目录下，运行 wsgiapp.py 文件，在浏览器中进入127.0.0.1:8000，即可看到博客页面。

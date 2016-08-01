@@ -3,7 +3,7 @@
 __author__ = 'patrick_psq'
 
 import logging; logging.basicConfig(level=logging.INFO)
-import os
+import os, time
 from datetime import datetime
 
 from transwarp import db
