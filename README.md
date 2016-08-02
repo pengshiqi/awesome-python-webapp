@@ -60,6 +60,14 @@ Blog list page.
 localhost:9000/manage/blogs
 ```
 
+### Day 13
+
+Add pymonitor.py(DEBUG model).
+
+### Day 14
+
+Accomplished!
+
 ## 运行方式
 
 进入/www目录下，运行 wsgiapp.py 文件，在浏览器中进入127.0.0.1:9000，即可看到博客页面。
