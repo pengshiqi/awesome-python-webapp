@@ -38,9 +38,31 @@ Front-end module.
 
 API module.
 
+### Day 10
+
+User register and log in.
+```
+localhost:9000/register
+localhost:9000/login
+```
+
+### Day 11
+
+Blog creating page.
+```
+localhost:9000/mange/blogs/create
+```
+
+### Day 12
+
+Blog list page.
+```
+localhost:9000/manage/blogs
+```
+
 ## 运行方式
 
-进入/www目录下，运行 wsgiapp.py 文件，在浏览器中进入127.0.0.1:8000，即可看到博客页面。
+进入/www目录下，运行 wsgiapp.py 文件，在浏览器中进入127.0.0.1:9000，即可看到博客页面。
 
 此前需要在config文件中设置本地数据库的连接方式，username和password。需要在本地的mysql数据库中创建一个名为awesome的database，在其中建立名为users,blogs和comments的表，这些在schema.sql中已经写好，在命令行中运行schema.sql即可。
 ```
